@@ -23,7 +23,7 @@ public class GenerateNameHandler extends AbstractHandler {
             } catch (Throwable throwable) {
                 return;
             }
-            httpServletResponse.getOutputStream().println(name);
+            httpServletResponse.getOutputStream().print(name);
             httpServletResponse.setStatus(200);
             request.setHandled(true);
         }
