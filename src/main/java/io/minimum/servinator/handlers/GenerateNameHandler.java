@@ -17,12 +17,7 @@ public class GenerateNameHandler extends AbstractHandler {
         // Crudest router evar
         if (target.startsWith(GENROOT)) {
             String list = target.substring(GENROOT.length());
-            String name;
-            try {
-                name = NameList.instance().generateName(list);
-            } catch (Throwable throwable) {
-                return;
-            }
+            String name = NameList.instance().generateName(list);
             httpServletResponse.getOutputStream().print(name);
             httpServletResponse.setStatus(200);
             request.setHandled(true);

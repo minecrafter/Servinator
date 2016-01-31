@@ -3,6 +3,7 @@ package io.minimum.servinator;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.io.CharStreams;
 
@@ -22,13 +23,15 @@ public class NameList {
     }
 
     private final List<String> suffixes;
-    private final ListMultimap<String, String> prefixes = ArrayListMultimap.create();
+    private final ListMultimap<String, String> prefixes;
     private final Random random = new Random();
 
     private NameList() {
         suffixes = ImmutableList.copyOf(getLines("suffixes.txt"));
-        prefixes.putAll("generic-english", getLines("lists/generic-english.txt"));
-        prefixes.putAll("latin-derived", getLines("lists/latin-derived.txt"));
+        ImmutableListMultimap.Builder<String, String> prefixBuilder = ImmutableListMultimap.builder();
+        prefixBuilder.putAll("generic-english", getLines("lists/generic-english.txt"));
+        prefixBuilder.putAll("latin-derived", getLines("lists/latin-derived.txt"));
+        prefixes = prefixBuilder.build();
     }
 
     public String generateName(String kind) {
